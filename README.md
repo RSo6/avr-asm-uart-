@@ -165,7 +165,7 @@ Thus, the chosen device structure is based on the use of the microcontroller's b
 The working model of the Universal Synchronous/Asynchronous Receiver-Transmitter (USART) interface in the Proteus software is shown in Figure 2.1.
 
 **Figure 2.1 — Working model diagram**
-<img src="img/figure21.png" width="300">
+<img src="img/figure21.png" width="700" height="300">
 
 *(Circuit diagram showing ATmega16 microcontroller with 8 switches SW1–SW8 connected to Port A via resistors R1–R8, 8 LEDs D1–D8 connected to Port C via resistors R9–R16, a virtual terminal connected via UART lines, and an oscilloscope monitoring the TXD/RXD lines.)*
 
@@ -178,7 +178,7 @@ Also, an oscilloscope is connected to the TxD and RxD lines of the USART module,
 Pins XTAL1 and XTAL2, in real circuits, are connected to a crystal oscillator with a frequency that determines the clock frequency of the microcontroller's generator: f_BQ. In our work, it equals 3.6864 MHz. Also connected are capacitors C1 and C2, with a capacitance of 30 pF, intended to increase the stability of the system oscillator's operation. The resonator and capacitors are needed in the practical circuit. In the Proteus model, they may be omitted. To set the frequency, one needs to double-click the left mouse button on the microcontroller and specify the frequency value in the Clock Frequency option, as shown in Figure 2.2.
 
 **Figure 2.2 — Configuring the microcontroller's clock frequency**
-<img src="img/figure22.png" width="300">
+<img src="img/figure22.png" width="700" height="300">
 ---
 
 ## 6. CALCULATIONS CONFIRMING DEVICE OPERABILITY
@@ -413,21 +413,21 @@ To compile the working program and obtain a hex file, an Integrated Development 
 The first step is to configure the terminal to transmit a character (char) with the transmission speed (baud rate) specified in the assignment — 4800. Unfortunately, the terminal settings do not allow changing the data size in the sent frames, so we keep it at 8 (data bits), set the parity to odd mode (ODD) as required by the assignment, and the stop bits field value will be 2, as per the assignment conditions. The overall picture is shown in Figure 3.1.
 
 **Figure 3.1 — Virtual terminal configuration**
-<img src="img/figure31.png" width="300">
+<img src="img/figure31.png" width="700" height="300">
 Next, it is necessary to configure the LEDs to receive a digital signal, i.e., logical "0"s and "1"s. To do this, one needs to enter the configuration settings the same way as was done for the terminal (double left-click on the required component). Configuration details are shown in Figure 3.2.
 
 **Figure 3.2 — Configuring the LEDs for digital mode**
-<img src="img/figure31.png" width="300">
+<img src="img/figure31.png" width="700" height="300">
 Once all preliminary settings are complete, the simulation process must be started by clicking "Start VSM Debugging" (Figure 3.3).
 
 **Figure 3.3 — Starting the simulation process**
-<img src="img/figure31.png" width="300">
+<img src="img/figure31.png" width="700" height="300">
 Also, after starting, we set two breakpoints during program execution, then click "Pause VSM Debugging." In the "Source Code" tab, two breakpoints are set. To do this, double-click the left mouse button on the left side of two commands, as shown in Figures 3.4–3.5. This is done to visually capture the result of entering a character from the terminal on the LEDs.
 
 **Figure 3.4 — Setting two breakpoints, point 1**
-<img src="img/figure34.png" width="300">
+<img src="img/figure34.png" width="700" height="300">
 **Figure 3.5 — Setting two breakpoints, point 2**
-<img src="img/figure35.png" width="300">
+<img src="img/figure35.png" width="700" height="300">
 ### Entering the character sent from the virtual terminal
 
 When entering a character from the virtual terminal, the following must be done:
@@ -435,13 +435,13 @@ When entering a character from the virtual terminal, the following must be done:
 1) In the "Virtual Terminal" window, right-click and select: "Hex Display Mode" and "Echo Typed Characters" (Figure 3.6). If the Virtual Terminal window is closed, it can be opened from the Debug tab.
 
 **Figure 3.6 — Setting virtual terminal options**
-<img src="img/figure36.png" width="300">
+<img src="img/figure36.png" width="700" height="300">
 This allows capturing the HEX value that is sent and received to/from the terminal.
 
 2) It is also necessary to configure the oscilloscope to read the alternating current (AC) from the cable connected to the transmit channel from the terminal (TXD) to the controller — red color on the oscilloscope — and the cable connected to the receive channel (RXD) to the terminal — green color. The result is demonstrated in Figure 3.7.
 
 **Figure 3.7 — Oscilloscope configuration**
-<img src="img/figure37.png" width="300">
+<img src="img/figure37.png" width="700" height="300">
 3) Press "Run Simulation" (F12).
 
 4) Before entering a character, the cursor must be positioned in the terminal window.
@@ -450,22 +450,22 @@ This allows capturing the HEX value that is sent and received to/from the termin
 
 **Figure 3.8 — Character "Q" in the ASCII table**
 (Character: Q, Code: Shift+Q, Decimal: 81, Binary: 01010001, Hex: 51)
-<img src="img/figure38.png" width="300">
+<img src="img/figure38.png" width="700" height="300">
 The program will proceed to the line where the first breakpoint is set. In the "Schematic Capture" tab, the character received from the terminal is displayed on the LEDs and oscilloscope via Port C outputs (Figure 3.9).
 
 **Figure 3.9 — Display on LEDs and oscilloscope of the character "Q" received from the terminal**
-<img src="img/figure39.png" width="300">
+<img src="img/figure39.png" width="700" height="300">
 Since 5 bits are allocated for data content, the character "Q" is displayed as: 000|10001b, where "|" marks the point where data transmission from the terminal ends, although the actual binary value of the character "Q" is 01010001b, as confirmed by the oscilloscope readings, where the lower level is a logical "0" and the upper level is a logical "1". After discarding the first drop (i.e., the start bit), we obtain the inverted binary value of the character "Q". Since the number of ones is not even, the parity bit will equal 1, followed by 2 stop bits. A visual example of the packet is shown in Figure 3.10.
 
 **Figure 3.10 — Frame format displayed by the oscilloscope as signals**
 (Start Bit (1 bit), Data Frame (5 to 9 Data Bits), Parity Bits (0 to 1 bit), Stop Bits (1 to 2 bits))
-<img src="img/figure310.png" width="300">
+<img src="img/figure310.png" width="700" height="300">
 ### Entering the character sent from the microcontroller via UART
 
 1) The number to be transmitted from the microcontroller via UART is encoded by buttons: a closed button = zero, an open button = one (Figure 3.11).
 
 **Figure 3.11 — Encoding the transmitted character with keys**
-<img src="img/figure311.png" width="300">
+<img src="img/figure311.png" width="700" height="300">
 2) To see the transmitted signal on the oscilloscope, click the One-Shot option button (Figure 3.7).
 
 3) To continue program execution, click "Run Simulation" again. The program proceeds to the second breakpoint.
@@ -473,7 +473,7 @@ Since 5 bits are allocated for data content, the character "Q" is displayed as: 
 4) The signals displayed on the oscilloscope are explained below: the oscilloscope displays signals on two traces — the upper (green) is the signal transmitted from the buttons, the lower (red) is the signal received from the terminal: 51 (hex) (Figure 3.12).
 
 **Figure 3.12 — Signals on the oscilloscope: from terminal — red; from MCU (buttons) — green**
-<img src="img/figure312.png" width="300">
+<img src="img/figure312.png" width="700" height="300">
 The first signal transition transmitted from the keys, from high to low level, is the start bit. Then follow eight data bits, starting from the least significant bit, which are displayed on the oscilloscope as 10010000 (bin) = 90 (hex). Figure 3.13.
 
 (Diagram showing: Start bit (0), Data bits (MSB→LSB) 10010000, Parity bit (0 - even parity), Stop bits (2 bits))
@@ -528,7 +528,7 @@ The reset circuit consists of resistor Rst and button SW. It forms the RESET sig
 Thus, the circuit implements bidirectional data exchange between the microcontroller and the virtual terminal: transmission of button states to the terminal via UART, and reception of data from the terminal with subsequent display of the received byte on the LED indicator.
 
 **Figure 4.1 — Structural diagram of the device for information exchange between the UART module of the ATmega16 microcontroller and the virtual terminal**
-<img src="img/figure41.png" width="300">
+<img src="img/figure41.png" width="700" height="300">
 *(Diagram showing: SW1–SW8 pushbuttons (active HIGH) connected via R1–R8 (1kΩ input resistors) to Port A (PA0–PA7); ATmega16 microcontroller; Port C (PC0–PC7) connected via R9–R16 (1kΩ LED current limiting) to LEDs D1–D8; RESET circuit with Rst (10kΩ) and button; 3.6864 MHz crystal with C3, C4 (22pF) at XTAL1/XTAL2; UART Terminal connected to PD0/RXD and PD1/TXD; UART: Asynchronous, 4800 baud/s; VCC = +5V, GND = 0V)*
 
 ---
